@@ -13,6 +13,7 @@ class Transaction {
         $currentUserToken = $data['token'];
         $checkIfTokenVaild = TokenManagement::checkTokenIsValid($conn,$currentUserToken);
         if($checkIfTokenVaild['status'] == false){
+
             Response::json(null,$checkIfTokenVaild["message"],401);
         }
         $getTransactions =$conn->prepare("SELECT * FROM transactions WHERE id=:id OR reg_no=:reg_no");
