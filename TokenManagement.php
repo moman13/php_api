@@ -20,7 +20,9 @@ class TokenManagement {
             return array('status'=>false,"message"=>"Token is invalid","code"=>5002);
         }
         if ($session["valid_till"] < $now){
-            return array('status'=>false,"message"=>"Token date","code"=>5003);
+            $currentUser =  TokenManagement::currentUser($conn,$token);
+            LogHandler::insert($conn,"token  expiered ",$token,$currentUser["id"]);
+            return array('status'=>false,"message"=>"Token  expiered","code"=>5003);
         }
         return  array("status"=>true,"message"=>"Token valid","code"=>5000);
 
