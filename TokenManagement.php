@@ -1,6 +1,13 @@
 <?php
 class TokenManagement {
     public  $SECRET_KEY = "mms_secret_key";
+
+    /**
+     * @param $conn
+     * @param $user_id
+     * @param $expiredInDays
+     * @return array
+     */
     public  static function createToken($conn,$user_id,$expiredInDays=7){
         $now = date("Y-m-d H:i:s");
         $vaildTil =date("Y-m-d H:i:s",strtotime($now." +$expiredInDays days"));
@@ -10,6 +17,12 @@ class TokenManagement {
         $insert->execute([$user_id, $token, $vaildTil]);
         return array("token"=>$token,"valid_till"=>$vaildTil);
     }
+
+    /**
+     * @param $conn
+     * @param $token
+     * @return array
+     */
     public static function checkTokenIsValid($conn,$token){
         $now = date("Y-m-d H:i:s");
         $findSession= $conn->prepare("SELECT * FROM sessions WHERE token= :token");
@@ -27,6 +40,12 @@ class TokenManagement {
         return  array("status"=>true,"message"=>"Token valid","code"=>5000);
 
  }
+
+    /**
+     * @param $conn
+     * @param $token
+     * @return mixed
+     */
     public static function currentUser($conn,$token){
         $now = date("Y-m-d H:i:s");
         $findSession= $conn->prepare("SELECT * FROM sessions WHERE token=:token");

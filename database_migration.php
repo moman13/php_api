@@ -1,8 +1,12 @@
 <?php
-include "db_config.php";
+/*
+ * for create tables
+ * */
+
+
 /** Create User Table  */
 // sql to create table
-$sql = "CREATE TABLE users (
+$sql = "CREATE TABLE IF NOT EXISTS  users (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 username VARCHAR(30) NOT NULL,
 password VARCHAR(191) NOT NULL,
@@ -18,7 +22,7 @@ if ($conn->query($sql) === TRUE) {
 /** End User */
 
 /** Create Session Table */
-$sql = "CREATE TABLE sessions (
+$sql = "CREATE TABLE IF NOT EXISTS  sessions (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 token VARCHAR(191) NOT NULL,
 user_id INT(6),
@@ -38,7 +42,7 @@ if ($conn->query($sql) === TRUE) {
 
 /** Create transactions Table */
 
-$sql = "CREATE TABLE transactions (
+$sql = "CREATE TABLE IF NOT EXISTS  transactions (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(191) NOT NULL,
 amount VARCHAR(191) NOT NULL,
@@ -60,7 +64,7 @@ if ($conn->query($sql) === TRUE) {
 
 /** Create logs Table */
 
-$sql = "CREATE TABLE logs (
+$sql = "CREATE TABLE IF NOT EXISTS  logs (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(191)  NULL,
 payload LONGTEXT  NULL,
